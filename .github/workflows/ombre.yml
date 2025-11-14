@@ -1,19 +1,12 @@
 name: Validación de JSON
-on:
-  push:
-    branches: [main]
-jobs:
-  check-file:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v3
 
-      - name: Verificar existencia del archivo
-        run: |
-          if [ ! -f "Dockerfile" ]; then
-            echo "ERROR: El archivo Dockerfile no existe en el repositorio."
-            exit 1
-          else
-            echo "Archivo Dockerfile encontrado."
-          fi
+on:
+ pull_request:
+  branches: [main]
+jobs:
+ validar:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v4
+    - name: Validar formato JSON
+      run: ./validate.sh
